@@ -1,52 +1,35 @@
-import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import React from 'react'
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectRecommend } from "../features/movie/movieSlice";
 
 const Recommends = (props) => {
+  const movies = useSelector(selectRecommend);
+
   return (
     <Container>
-      <h4>Recommend for you</h4>
-      <Contant>
-        <Wrap>
-          <Link to="/">
-            <img
-              src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/87F1DCF36049558159913ADFD18A800DE1121771540033EC3A7651B8FE154CEB/scale?width=400&aspectRatio=1.78&format=jpeg"
-              alt=""
-            />
-          </Link>
-        </Wrap>
-        <Wrap>
-          <Link to="/">
-            <img
-              src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/87F1DCF36049558159913ADFD18A800DE1121771540033EC3A7651B8FE154CEB/scale?width=400&aspectRatio=1.78&format=jpeg"
-              alt=""
-            />
-          </Link>
-        </Wrap>
-        <Wrap>
-          <Link to="/">
-            <img
-              src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/87F1DCF36049558159913ADFD18A800DE1121771540033EC3A7651B8FE154CEB/scale?width=400&aspectRatio=1.78&format=jpeg"
-              alt=""
-            />
-          </Link>
-        </Wrap>
-        <Wrap>
-          <Link to="/">
-            <img
-              src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/87F1DCF36049558159913ADFD18A800DE1121771540033EC3A7651B8FE154CEB/scale?width=400&aspectRatio=1.78&format=jpeg"
-              alt=""
-            />
-          </Link>
-        </Wrap>
-      </Contant>
+      <h4>Recommended for You</h4>
+      <Content>
+        {movies &&
+          movies.map((movie, key) => (
+            <Wrap key={key}>
+              {movie.id}
+              <Link to={`/detail/` + movie.id}>
+                <img src={movie.cardImg} alt={movie.title} />
+              </Link>
+            </Wrap>
+          ))}
+      </Content>
     </Container>
-  )
-}
+  );
+};
 
 const Container = styled.div`
   padding: 0 0 26px;
-`
-const Contant = styled.div`
+`;
+
+const Content = styled.div`
   display: grid;
   grid-gap: 25px;
   gap: 25px;
@@ -55,7 +38,8 @@ const Contant = styled.div`
   @media (max-width: 768px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-`
+`;
+
 const Wrap = styled.div`
   padding-top: 56.25%;
   border-radius: 10px;
@@ -84,8 +68,8 @@ const Wrap = styled.div`
     box-shadow: rgb(0 0 0 / 80%) 0px 40px 58px -16px,
       rgb(0 0 0 / 72%) 0px 30px 22px -10px;
     transform: scale(1.05);
-    border-color: rgba(249, 249, 249, 1.8);
+    border-color: rgba(249, 249, 249, 0.8);
   }
-`
+`;
 
-export default Recommends
+export default Recommends;

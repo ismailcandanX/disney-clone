@@ -1,7 +1,8 @@
+import React from 'react'
 import { useEffect } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import 'firebase/compat/auth'
 import 'firebase/compat/firestore'
 import { auth, provider } from '../firebase'
@@ -15,17 +16,18 @@ import {
 
 const Header = (props) => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const userName = useSelector(selectUserName)
   const userPhoto = useSelector(selectUserPhoto)
   const userEmail = useSelector(selectUserEmail)
 
   useEffect(() => {
-    auth.onAuthStateChanged(async (user) => {
+    auth.onAuthStateChanged( (user) => {
       if (user) {
         setUser(user)
-        history.push('/home')
+        navigate('/home')
       }
+      return
     })
   }, [userName])
 
@@ -42,7 +44,7 @@ const Header = (props) => {
     } else if (userName) {
       auth.signOut().then(() => {
         dispatch(setSignOutState())
-        history.push('/')
+        navigate('/')
       }).catch((error) => alert(error.message))
     }
   }
