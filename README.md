@@ -7,6 +7,7 @@
 
 - Reactjs
 - Cloud Firestore / Firebase db
+- Authentication with Firebase 🔑
 - React Router
 - Styled Components
 - Responsive
